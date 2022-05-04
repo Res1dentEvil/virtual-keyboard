@@ -1,0 +1,56 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: #252526;
+    color           : #ffffff;
+}
+
+.wrapper {
+    display       : flex;
+    flex-direction: column;
+    border        : 1px solid #8BC658;
+    max-width     : 1280px;
+    min-height    : 100px;
+    margin        : 0 auto;
+
+    .textarea {
+        margin          : 50px auto;
+        width           : 70%;
+        height          : 200px;
+        background-color: #bbbbbb;
+    }
+
+    .keyBoard {
+        display         : flex;
+        flex-wrap       : wrap;
+        gap             : 10px;
+        background-color: #3C3F41;
+        min-width       : 100px;
+        min-height      : 100px;
+        margin          : 0 auto;
+        padding         : 40px;
+
+        .row {
+            display: flex;
+            gap    : 10px;
+            margin : 0 auto;
+
+            .keyItem {
+                min-width          : 50px;
+                height         : 50px;
+                padding: 10px;
+                border         : 1px solid #b2c658;
+                display        : flex;
+                justify-content: center;
+                align-items    : center;
+
+            }
+        }
+    }
+}
