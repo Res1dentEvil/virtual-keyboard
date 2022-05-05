@@ -34,7 +34,7 @@ const dataKeys = [
     [
         ['CapsLock', 'CapsLock', 'CapsLock', 'CapsLock', 'CapsLock', 'CapsLock'],
         ['KeyA', 'ф', 'Ф', 'a', 'A'],
-        ['KeyS', 'ы', 'Ы', 's', 'S'],
+        ['KeyS', 'і', 'І', 's', 'S'],
         ['KeyD', 'в', 'В', 'd', 'D'],
         ['KeyF', 'а', 'А', 'f', 'F'],
         ['KeyG', 'п', 'П', 'g', 'G'],
@@ -75,12 +75,15 @@ const dataKeys = [
 ];
 
 
+let lang = 'en';
+let shift = false;
+let capsLock = false;
 
-let lang = 'en'
 const wrapper = document.createElement('div')
 wrapper.classList.add('wrapper')
 
 const textarea = document.createElement('textarea')
+textarea.autofocus = true;
 textarea.classList.add('textarea')
 wrapper.append(textarea);
 
@@ -88,27 +91,69 @@ const keyBoard = document.createElement('div')
 keyBoard.classList.add('keyBoard')
 wrapper.append(keyBoard);
 
-for (let i = 0; i < dataKeys.length; i++) {
-    const row = document.createElement('div');
-    row.classList.add('row');
-    keyBoard.append(row);
 
-    for (let j = 0; j < dataKeys[i].length; j++) {
-        const keyItem = document.createElement('div')
-        keyItem.classList.add('keyItem')
+const init = () => {
+    for (let i = 0; i < dataKeys.length; i++) {
+        const row = document.createElement('div');
+        row.classList.add('row');
+        keyBoard.append(row);
 
-        const keySpan = document.createElement('span')
-        keySpan.classList.add('keySpan')
-        keySpan.textContent = dataKeys[i][j][4]
+        for (let j = 0; j < dataKeys[i].length; j++) {
+            const keyItem = document.createElement('div')
+            keyItem.classList.add('keyItem')
 
-        
-        keyItem.append(keySpan);
-        row.append(keyItem);
+            const keySpan = document.createElement('span')
+            keySpan.classList.add('keySpan')
+
+            if (lang == 'en') {
+                keySpan.textContent = dataKeys[i][j][3]
+            } else if (lang == 'ua') {
+                keySpan.textContent = dataKeys[i][j][1]
+            }
+
+            keyItem.append(keySpan);
+            row.append(keyItem);
+        }
     }
+    document.body.append(wrapper);
+
 }
 
 
 
+const changeLang = () => {
+    if (lang == 'en') lang = 'ua'
+    else if (lang == 'ua') lang = 'en'
+
+    const spans = document.querySelectorAll('.keySpan')
+    let currLangKeys = []
+
+    for (let i = 0; i < dataKeys.length; i++) {
+        for (let j = 0; j < dataKeys[i].length; j++) {
+            if (lang == 'en') {
+                currLangKeys.push(dataKeys[i][j][3])
+            } else if (lang == 'ua') {
+                currLangKeys.push(dataKeys[i][j][1])
+            }
+        }
+    }
+    spans.forEach((span, index) => {
+        span.textContent = currLangKeys[index]
+    })
+}
 
 
-document.body.append(wrapper);
+document.addEventListener('keydown', (e) => {
+    if (e.altKey && e.ctrlKey) {
+        changeLang()
+        console.log(lang)
+    }
+}
+)
+
+
+
+window.addEventListener('DOMContentLoaded', init);
+// window.addEventListener('keydown', pressHandler);
+// window.addEventListener('keyup', pressHandler);
+

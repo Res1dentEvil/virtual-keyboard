@@ -49,7 +49,11 @@ body {
                 display        : flex;
                 justify-content: center;
                 align-items    : center;
-
+                border-radius: 10%;
+                &:hover {
+                    cursor: pointer;
+                    background-color: #b2c6583a;
+                }
             }
         }
     }
