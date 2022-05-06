@@ -116,23 +116,30 @@ const init = () => {
         }
     }
     document.body.append(wrapper);
+}
 
+const sweepLang = () => {
+    if (lang == 'en') lang = 'ua'
+    else if (lang == 'ua') lang = 'en'
 }
 
 
-
-const changeLang = () => {
-    if (lang == 'en') lang = 'ua'
-    else if (lang == 'ua') lang = 'en'
-
+const changeChars = (isCaps) => {
+    if (!isCaps) {
+        sweepLang()
+    }
     const spans = document.querySelectorAll('.keySpan')
     let currLangKeys = []
 
     for (let i = 0; i < dataKeys.length; i++) {
         for (let j = 0; j < dataKeys[i].length; j++) {
-            if (lang == 'en') {
+            if (lang == 'en' && capsLock) {
+                currLangKeys.push(dataKeys[i][j][4])
+            } else if (lang == 'en' && !capsLock) {
                 currLangKeys.push(dataKeys[i][j][3])
-            } else if (lang == 'ua') {
+            } else if (lang == 'ua' && capsLock) {
+                currLangKeys.push(dataKeys[i][j][2])
+            } else if (lang == 'ua' && !capsLock) {
                 currLangKeys.push(dataKeys[i][j][1])
             }
         }
@@ -145,12 +152,35 @@ const changeLang = () => {
 
 document.addEventListener('keydown', (e) => {
     if (e.altKey && e.ctrlKey) {
-        changeLang()
+        changeChars()
         console.log(lang)
     }
+    if (e.code === 'CapsLock') {
+        capsLock ? capsLock = false : capsLock = true
+        let isCaps = true
+        changeChars(isCaps)
+        console.log(capsLock)
+    }
+    if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') {
+        capsLock ? capsLock = false : capsLock = true
+        let isCaps = true
+        changeChars(isCaps)
+        console.log('DOWN', e.code)
+    }
+
 }
 )
 
+
+document.addEventListener('keyup', (e) => {
+    if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') {
+        capsLock ? capsLock = false : capsLock = true
+        let isCaps = true
+        changeChars(isCaps)
+        console.log('up', e.code)
+    }
+}
+)
 
 
 window.addEventListener('DOMContentLoaded', init);
