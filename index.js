@@ -1,3 +1,6 @@
+import keys from './keys.js';
+//alert(keys.Digit1.en.caseUp)
+
 const dataKeys = [
     [['Backquote', 'ё', 'Ё', '`', '~'],
     ['Digit1', '1', '!', '1', '!'],
@@ -78,12 +81,13 @@ const dataKeys = [
 let lang = 'en';
 let shift = false;
 let capsLock = false;
+let cursor;
 
 const wrapper = document.createElement('div')
 wrapper.classList.add('wrapper')
 
 const textarea = document.createElement('textarea')
-textarea.autofocus = true;
+//textarea.disabled = true;
 textarea.classList.add('textarea')
 wrapper.append(textarea);
 
@@ -107,8 +111,11 @@ const init = () => {
 
             if (lang == 'en') {
                 keySpan.textContent = dataKeys[i][j][3]
+                keySpan.id = dataKeys[i][j][3]
+
             } else if (lang == 'ua') {
                 keySpan.textContent = dataKeys[i][j][1]
+                keySpan.id = dataKeys[i][j][1]
             }
 
             keyItem.append(keySpan);
@@ -146,11 +153,43 @@ const changeChars = (isCaps) => {
     }
     spans.forEach((span, index) => {
         span.textContent = currLangKeys[index]
+        span.id = currLangKeys[index]
     })
 }
 
+//textarea.focus();
+
 
 document.addEventListener('keydown', (e) => {
+    e.preventDefault();
+
+
+    if (e.code === 'Delete') {
+        cursor = textarea.selectionStart;
+        if (textarea.selectionStart !== textarea.value.length) {
+            if (textarea.selectionStart !== textarea.selectionEnd) {
+              let text = [...textarea.value];
+              text.splice(textarea.selectionStart, textarea.selectionEnd - textarea.selectionStart);
+              text = text.join('');
+              textarea.value = text;
+              textarea.setSelectionRange(cursor, cursor);
+            } else {
+              let text = [...textarea.value];
+              text.splice(cursor, 1);
+              text = text.join('');
+              textarea.value = text;
+              textarea.setSelectionRange(cursor, cursor);
+            }
+          }
+    }
+
+    if (capsLock && (e.keyCode > 47 && e.keyCode < 91)) {
+        textarea.value += keys[e.code][lang].caseUp
+    } else if (!capsLock && (e.keyCode > 47 && e.keyCode < 91)) {
+        textarea.value += keys[e.code][lang].caseDown
+    }
+
+
     if (e.altKey && e.ctrlKey) {
         changeChars()
         console.log(lang)
@@ -168,6 +207,35 @@ document.addEventListener('keydown', (e) => {
         console.log('DOWN', e.code)
     }
 
+    switch (e.code) {
+        case 'MetaLeft':
+            break;
+
+        case 'Tab':
+            textarea.value += '    ';
+            break;
+
+        case 'Space':
+            textarea.value += ' ';
+            break;
+
+        case 'Enter':
+            textarea.value += '\n';
+            break;
+
+        case 'Backspace':
+            textarea.value = textarea.value.substring(0, textarea.value.length - 1);
+            break;
+
+        case 'AltLeft':
+        case 'AltRight':
+            break;
+
+        case 'ControlLeft':
+        case 'ControlRight':
+            break;
+
+    }
 }
 )
 
