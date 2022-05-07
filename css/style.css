@@ -26,13 +26,14 @@ body {
 }
 .wrapper .textarea {
   margin: 50px auto;
-  width: 70%;
+  width: 80%;
   height: 300px;
-  background-color: #6A8C61;
+  background-color: #3c3f414b;
   border-radius: 10px;
-  color: #F2EB85;
+  color: white;
   padding: 30px;
   font-size: 25px;
+  border: 1px solid #d9cf4a1f;
 }
 .wrapper .keyBoard {
   display: -webkit-box;
@@ -43,9 +44,10 @@ body {
   gap: 10px;
   background-color: #3c3f414b;
   margin: 0 auto;
-  padding: 40px;
+  padding: 30px;
   border-radius: 10px;
   border: 1px solid #d9cf4a1f;
+  width: 75%;
 }
 .wrapper .keyBoard .row {
   display: -webkit-box;
@@ -68,7 +70,7 @@ body {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  border-radius: 10%;
+  border-radius: 5px;
 }
 .wrapper .keyBoard .row .keyItem:hover {
   cursor: pointer;
@@ -80,4 +82,32 @@ body {
   -webkit-transform: scale(0.9);
           transform: scale(0.9);
   color: #F2EB85;
+}
+.wrapper .Space {
+  width: 310px;
+}
+.wrapper .Backspace {
+  width: 110px;
+}
+.wrapper .Enter {
+  width: 110px;
+}
+.wrapper .CapsLock {
+  width: 110px;
+}
+.wrapper .ShiftLeft,
+.wrapper .ShiftRight {
+  width: 110px;
+}
+.wrapper .ControlLeft,
+.wrapper .ControlRight,
+.wrapper .AltLeft,
+.wrapper .AltRight,
+.wrapper .MetaLeft {
+  width: 70px;
+}
+.wrapper .title {
+  margin: 10px auto;
+  width: 75%;
+  text-align: center;
 }

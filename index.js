@@ -1,5 +1,4 @@
 import keys from './keys.js';
-//alert(keys.Digit1.en.caseUp)
 
 const dataKeys = [
     [['Backquote', 'ё', 'Ё', '`', '~'],
@@ -95,6 +94,14 @@ const keyBoard = document.createElement('div')
 keyBoard.classList.add('keyBoard')
 wrapper.append(keyBoard);
 
+const title = document.createElement('div')
+title.innerHTML = `
+<div class="title">The keyboard was created in the Windows operating system</div>
+<div class="title">To switch languages, combination: left ctrl + alt</div>`
+wrapper.append(title);
+
+
+
 
 const init = () => {
     for (let i = 0; i < dataKeys.length; i++) {
@@ -156,16 +163,18 @@ const changeChars = (isCaps) => {
     })
 }
 
+
+
 const addActive = (el) => {
     el.classList.add('active');
-  }
-  const removeActive = (el) => {
+}
+const removeActive = (el) => {
     el.classList.remove('active');
-  }
+}
 
 
 document.addEventListener('keydown', (e) => {
-    
+    console.log(e.code)
     e.preventDefault();
     let activeKey = document.getElementsByClassName(e.code)[0]
     addActive(activeKey)
@@ -218,11 +227,6 @@ document.addEventListener('keydown', (e) => {
             }
         }
     }
-
-
-
-
-
 
     if (e.altKey && e.ctrlKey) {
         changeChars()
@@ -284,7 +288,22 @@ document.addEventListener('keyup', (e) => {
 )
 
 
-window.addEventListener('DOMContentLoaded', init);
+
+//save in local storage when rebooting (beforeunload) (beforeunload)
+function setLocalStorage() {
+    localStorage.setItem('lang', lang);
+}
+window.addEventListener('beforeunload', setLocalStorage)
+
+//get lang from local storage when load (load)
+function getLocalStorage() {
+    if (localStorage.getItem('lang')) {
+        lang = localStorage.getItem('lang');
+        init()
+    }
+}
+
+window.addEventListener('DOMContentLoaded', getLocalStorage);
 // window.addEventListener('keydown', (e) => {});
 // window.addEventListener('keyup', (e) => {});
 
