@@ -59,7 +59,6 @@ body {
 .wrapper .keyBoard .row .keyItem {
   min-width: 50px;
   height: 50px;
-  padding: 10px;
   background-color: #F2EB85;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -75,6 +74,22 @@ body {
 .wrapper .keyBoard .row .keyItem:hover {
   cursor: pointer;
   background-color: #D9CF4A;
+}
+.wrapper .keyBoard .row .keyItem .keySpan {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-radius: 5px;
+  z-index: 2;
 }
 .wrapper .keyBoard .row .active {
   background-color: #6A8C61;

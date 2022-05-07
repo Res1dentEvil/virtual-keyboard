@@ -120,9 +120,11 @@ const init = () => {
 
             if (lang == 'en') {
                 keySpan.textContent = dataKeys[i][j][3]
+                keySpan.classList.add(dataKeys[i][j][0])
 
             } else if (lang == 'ua') {
                 keySpan.textContent = dataKeys[i][j][1]
+                keySpan.classList.add(dataKeys[i][j][0])
             }
 
             keyItem.append(keySpan);
@@ -138,7 +140,7 @@ const sweepLang = () => {
 }
 
 
-const changeChars = (isCaps) => {
+const changeLangAndCase = (isCaps) => {
     if (!isCaps) {
         sweepLang()
     }
@@ -172,9 +174,127 @@ const removeActive = (el) => {
     el.classList.remove('active');
 }
 
+const deleteChar = () => {
+    cursorPoint = textarea.selectionStart;
+    if (textarea.selectionStart !== textarea.value.length) {
+        if (textarea.selectionStart !== textarea.selectionEnd) {
+            let text = [...textarea.value];
+            text.splice(textarea.selectionStart, textarea.selectionEnd - textarea.selectionStart);
+            text = text.join('');
+            textarea.value = text;
+            textarea.setSelectionRange(cursorPoint, cursorPoint);
+        } else {
+            let text = [...textarea.value];
+            text.splice(cursorPoint, 1);
+            text = text.join('');
+            textarea.value = text;
+            textarea.setSelectionRange(cursorPoint, cursorPoint);
+        }
+    }
+}
+const backspaceChar = () => {
+    cursorPoint = textarea.selectionStart;
+    if (textarea.value.length !== 0 && cursorPoint !== 0) {
+        if (textarea.selectionStart !== textarea.selectionEnd) {
+            let text = [...textarea.value];
+            text.splice(textarea.selectionStart, textarea.selectionEnd - textarea.selectionStart);
+            text = text.join('');
+            textarea.value = text;
+            textarea.setSelectionRange(cursorPoint, cursorPoint);
+        } else {
+            textarea.setSelectionRange(cursorPoint, cursorPoint);
+            let text = [...textarea.value];
+            text.splice(cursorPoint - 1, 1);
+            text = text.join('');
+            textarea.value = text;
+            cursorPoint -= 1;
+            textarea.setSelectionRange(cursorPoint, cursorPoint);
+        }
+    }
+}
+
+document.addEventListener('mousedown', (e) => {
+    if (e.target.classList.contains('keySpan')) {
+        let spanClass = e.target.closest('.keyItem').classList[1];
+        let activeKey = e.target.closest('.keyItem');
+
+        // console.log(activeKey)
+        // console.log(spanClass);
+
+        addActive(activeKey)
+
+        if (e.target.textContent.length == 1) {
+            console.log(e.target.textContent)
+            textarea.value += e.target.textContent
+        } else {
+            if (spanClass === 'Delete') {
+                deleteChar()
+            }
+
+            if (spanClass === 'Backspace') {
+                backspaceChar()
+            }
+
+            if (spanClass === 'CapsLock') {
+                capsLock ? capsLock = false : capsLock = true
+                let isCaps = true
+                changeLangAndCase(isCaps)
+                console.log(capsLock)
+            }
+            if (spanClass === 'ShiftLeft' || spanClass === 'ShiftRight') {
+                capsLock ? capsLock = false : capsLock = true
+                let isCaps = true
+                changeLangAndCase(isCaps)
+                console.log('DOWN', e.code)
+            }
+
+            switch (spanClass) {
+                case 'MetaLeft':
+                    break;
+
+                case 'Tab':
+                    textarea.value += '    ';
+                    break;
+
+                case 'Space':
+                    textarea.value += ' ';
+                    break;
+
+                case 'Enter':
+                    textarea.value += '\n';
+                    break;
+
+                case 'AltLeft':
+                case 'AltRight':
+                    break;
+
+                case 'ControlLeft':
+                case 'ControlRight':
+                    break;
+
+            }
+        }
+    }
+}
+)
+
+document.addEventListener('mouseup', (e) => {
+    if (e.target.classList.contains('keySpan')) {
+        let spanClass = e.target.closest('.keyItem').classList[1];
+
+        removeActive(e.target.closest('.keyItem'))
+
+        if (spanClass === 'ShiftLeft' || spanClass === 'ShiftRight') {
+            capsLock ? capsLock = false : capsLock = true
+            let isCaps = true
+            changeLangAndCase(isCaps)
+        }
+
+    }
+})
 
 document.addEventListener('keydown', (e) => {
-    console.log(e.code)
+    //console.log(e.code)
     e.preventDefault();
     let activeKey = document.getElementsByClassName(e.code)[0]
     addActive(activeKey)
@@ -186,63 +306,27 @@ document.addEventListener('keydown', (e) => {
         textarea.value += keys[e.code][lang].caseDown
     }
 
-
     if (e.code === 'Delete') {
-        cursorPoint = textarea.selectionStart;
-        if (textarea.selectionStart !== textarea.value.length) {
-            if (textarea.selectionStart !== textarea.selectionEnd) {
-                let text = [...textarea.value];
-                text.splice(textarea.selectionStart, textarea.selectionEnd - textarea.selectionStart);
-                text = text.join('');
-                textarea.value = text;
-                textarea.setSelectionRange(cursorPoint, cursorPoint);
-            } else {
-                let text = [...textarea.value];
-                text.splice(cursorPoint, 1);
-                text = text.join('');
-                textarea.value = text;
-                textarea.setSelectionRange(cursorPoint, cursorPoint);
-            }
-        }
+        deleteChar()
     }
-
-
     if (e.code === 'Backspace') {
-        cursorPoint = textarea.selectionStart;
-        if (textarea.value.length !== 0 && cursorPoint !== 0) {
-            if (textarea.selectionStart !== textarea.selectionEnd) {
-                let text = [...textarea.value];
-                text.splice(textarea.selectionStart, textarea.selectionEnd - textarea.selectionStart);
-                text = text.join('');
-                textarea.value = text;
-                textarea.setSelectionRange(cursorPoint, cursorPoint);
-            } else {
-                textarea.setSelectionRange(cursorPoint, cursorPoint);
-                let text = [...textarea.value];
-                text.splice(cursorPoint - 1, 1);
-                text = text.join('');
-                textarea.value = text;
-                cursorPoint -= 1;
-                textarea.setSelectionRange(cursorPoint, cursorPoint);
-            }
-        }
+        backspaceChar()
     }
 
     if (e.altKey && e.ctrlKey) {
-        changeChars()
+        changeLangAndCase()
         console.log(lang)
     }
     if (e.code === 'CapsLock') {
         capsLock ? capsLock = false : capsLock = true
         let isCaps = true
-        changeChars(isCaps)
+        changeLangAndCase(isCaps)
         console.log(capsLock)
     }
     if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') {
         capsLock ? capsLock = false : capsLock = true
         let isCaps = true
-        changeChars(isCaps)
-        console.log('DOWN', e.code)
+        changeLangAndCase(isCaps)
     }
 
     switch (e.code) {
@@ -281,7 +365,7 @@ document.addEventListener('keyup', (e) => {
     if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') {
         capsLock ? capsLock = false : capsLock = true
         let isCaps = true
-        changeChars(isCaps)
+        changeLangAndCase(isCaps)
         console.log('up', e.code)
     }
 }
