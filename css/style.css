@@ -9,7 +9,7 @@ html {
 
 body {
   background-color: #252526;
-  color: #ffffff;
+  color: #734636;
 }
 
 .wrapper {
@@ -20,7 +20,6 @@ body {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  border: 1px solid #8BC658;
   max-width: 1280px;
   min-height: 100px;
   margin: 0 auto;
@@ -28,8 +27,12 @@ body {
 .wrapper .textarea {
   margin: 50px auto;
   width: 70%;
-  height: 200px;
-  background-color: #bbbbbb;
+  height: 300px;
+  background-color: #6A8C61;
+  border-radius: 10px;
+  color: #F2EB85;
+  padding: 30px;
+  font-size: 25px;
 }
 .wrapper .keyBoard {
   display: -webkit-box;
@@ -38,11 +41,11 @@ body {
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
   gap: 10px;
-  background-color: #3C3F41;
-  min-width: 100px;
-  min-height: 100px;
+  background-color: #3c3f414b;
   margin: 0 auto;
   padding: 40px;
+  border-radius: 10px;
+  border: 1px solid #d9cf4a1f;
 }
 .wrapper .keyBoard .row {
   display: -webkit-box;
@@ -55,7 +58,7 @@ body {
   min-width: 50px;
   height: 50px;
   padding: 10px;
-  border: 1px solid #b2c658;
+  background-color: #F2EB85;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -69,5 +72,12 @@ body {
 }
 .wrapper .keyBoard .row .keyItem:hover {
   cursor: pointer;
-  background-color: #b2c6583a;
+  background-color: #D9CF4A;
+}
+.wrapper .keyBoard .row .active {
+  background-color: #6A8C61;
+  border-radius: 10px;
+  -webkit-transform: scale(0.9);
+          transform: scale(0.9);
+  color: #F2EB85;
 }

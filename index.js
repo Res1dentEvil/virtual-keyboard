@@ -87,7 +87,7 @@ const wrapper = document.createElement('div')
 wrapper.classList.add('wrapper')
 
 const textarea = document.createElement('textarea')
-//textarea.disabled = true;
+//textarea.focus();
 textarea.classList.add('textarea')
 wrapper.append(textarea);
 
@@ -105,17 +105,17 @@ const init = () => {
         for (let j = 0; j < dataKeys[i].length; j++) {
             const keyItem = document.createElement('div')
             keyItem.classList.add('keyItem')
+            keyItem.classList.add(dataKeys[i][j][0])
+
 
             const keySpan = document.createElement('span')
             keySpan.classList.add('keySpan')
 
             if (lang == 'en') {
                 keySpan.textContent = dataKeys[i][j][3]
-                keySpan.id = dataKeys[i][j][3]
 
             } else if (lang == 'ua') {
                 keySpan.textContent = dataKeys[i][j][1]
-                keySpan.id = dataKeys[i][j][1]
             }
 
             keyItem.append(keySpan);
@@ -153,15 +153,29 @@ const changeChars = (isCaps) => {
     }
     spans.forEach((span, index) => {
         span.textContent = currLangKeys[index]
-        span.id = currLangKeys[index]
     })
 }
 
-//textarea.focus();
+const addActive = (el) => {
+    el.classList.add('active');
+  }
+  const removeActive = (el) => {
+    el.classList.remove('active');
+  }
 
 
 document.addEventListener('keydown', (e) => {
+    
     e.preventDefault();
+    let activeKey = document.getElementsByClassName(e.code)[0]
+    addActive(activeKey)
+
+
+    if (capsLock && (e.keyCode > 37 && e.keyCode < 91 && e.keyCode !== 46)) {
+        textarea.value += keys[e.code][lang].caseUp
+    } else if (!capsLock && (e.keyCode > 37 && e.keyCode < 91 && e.keyCode !== 46)) {
+        textarea.value += keys[e.code][lang].caseDown
+    }
 
 
     if (e.code === 'Delete') {
@@ -205,11 +219,9 @@ document.addEventListener('keydown', (e) => {
         }
     }
 
-    if (capsLock && (e.keyCode > 47 && e.keyCode < 91)) {
-        textarea.value += keys[e.code][lang].caseUp
-    } else if (!capsLock && (e.keyCode > 47 && e.keyCode < 91)) {
-        textarea.value += keys[e.code][lang].caseDown
-    }
+
+
+
 
 
     if (e.altKey && e.ctrlKey) {
@@ -259,6 +271,9 @@ document.addEventListener('keydown', (e) => {
 
 
 document.addEventListener('keyup', (e) => {
+    let activeKey = document.getElementsByClassName(e.code)[0]
+    removeActive(activeKey)
+
     if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') {
         capsLock ? capsLock = false : capsLock = true
         let isCaps = true
