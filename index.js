@@ -81,7 +81,7 @@ const dataKeys = [
 let lang = 'en';
 let shift = false;
 let capsLock = false;
-let cursor;
+let cursorPoint;
 
 const wrapper = document.createElement('div')
 wrapper.classList.add('wrapper')
@@ -165,22 +165,44 @@ document.addEventListener('keydown', (e) => {
 
 
     if (e.code === 'Delete') {
-        cursor = textarea.selectionStart;
+        cursorPoint = textarea.selectionStart;
         if (textarea.selectionStart !== textarea.value.length) {
             if (textarea.selectionStart !== textarea.selectionEnd) {
-              let text = [...textarea.value];
-              text.splice(textarea.selectionStart, textarea.selectionEnd - textarea.selectionStart);
-              text = text.join('');
-              textarea.value = text;
-              textarea.setSelectionRange(cursor, cursor);
+                let text = [...textarea.value];
+                text.splice(textarea.selectionStart, textarea.selectionEnd - textarea.selectionStart);
+                text = text.join('');
+                textarea.value = text;
+                textarea.setSelectionRange(cursorPoint, cursorPoint);
             } else {
-              let text = [...textarea.value];
-              text.splice(cursor, 1);
-              text = text.join('');
-              textarea.value = text;
-              textarea.setSelectionRange(cursor, cursor);
+                let text = [...textarea.value];
+                text.splice(cursorPoint, 1);
+                text = text.join('');
+                textarea.value = text;
+                textarea.setSelectionRange(cursorPoint, cursorPoint);
             }
-          }
+        }
+    }
+
+
+    if (e.code === 'Backspace') {
+        cursorPoint = textarea.selectionStart;
+        if (textarea.value.length !== 0 && cursorPoint !== 0) {
+            if (textarea.selectionStart !== textarea.selectionEnd) {
+                let text = [...textarea.value];
+                text.splice(textarea.selectionStart, textarea.selectionEnd - textarea.selectionStart);
+                text = text.join('');
+                textarea.value = text;
+                textarea.setSelectionRange(cursorPoint, cursorPoint);
+            } else {
+                textarea.setSelectionRange(cursorPoint, cursorPoint);
+                let text = [...textarea.value];
+                text.splice(cursorPoint - 1, 1);
+                text = text.join('');
+                textarea.value = text;
+                cursorPoint -= 1;
+                textarea.setSelectionRange(cursorPoint, cursorPoint);
+            }
+        }
     }
 
     if (capsLock && (e.keyCode > 47 && e.keyCode < 91)) {
@@ -223,10 +245,6 @@ document.addEventListener('keydown', (e) => {
             textarea.value += '\n';
             break;
 
-        case 'Backspace':
-            textarea.value = textarea.value.substring(0, textarea.value.length - 1);
-            break;
-
         case 'AltLeft':
         case 'AltRight':
             break;
@@ -252,6 +270,6 @@ document.addEventListener('keyup', (e) => {
 
 
 window.addEventListener('DOMContentLoaded', init);
-// window.addEventListener('keydown', pressHandler);
-// window.addEventListener('keyup', pressHandler);
+// window.addEventListener('keydown', (e) => {});
+// window.addEventListener('keyup', (e) => {});
 
