@@ -366,7 +366,7 @@ function setLocalStorage() {
 }
 window.addEventListener('beforeunload', setLocalStorage);
 
-// get lang from local storage when load (load)
+//get lang from local storage when load (load)
 function getLocalStorage() {
   if (localStorage.getItem('lang')) {
     lang = localStorage.getItem('lang');
