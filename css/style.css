@@ -1,0 +1,128 @@
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #252526;
+  color: #734636;
+}
+
+.wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  max-width: 1280px;
+  min-height: 100px;
+  margin: 0 auto;
+}
+.wrapper .textarea {
+  margin: 50px auto;
+  width: 80%;
+  height: 300px;
+  background-color: #3c3f414b;
+  border-radius: 10px;
+  color: white;
+  padding: 30px;
+  font-size: 25px;
+  border: 1px solid #d9cf4a1f;
+}
+.wrapper .keyBoard {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  gap: 10px;
+  background-color: #3c3f414b;
+  margin: 0 auto;
+  padding: 30px;
+  border-radius: 10px;
+  border: 1px solid #d9cf4a1f;
+  width: 75%;
+}
+.wrapper .keyBoard .row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 10px;
+  margin: 0 auto;
+}
+.wrapper .keyBoard .row .keyItem {
+  min-width: 50px;
+  height: 50px;
+  background-color: #F2EB85;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-radius: 5px;
+}
+.wrapper .keyBoard .row .keyItem:hover {
+  cursor: pointer;
+  background-color: #D9CF4A;
+}
+.wrapper .keyBoard .row .keyItem .keySpan {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-radius: 5px;
+  z-index: 2;
+}
+.wrapper .keyBoard .row .active {
+  background-color: #6A8C61;
+  border-radius: 10px;
+  -webkit-transform: scale(0.9);
+          transform: scale(0.9);
+  color: #F2EB85;
+}
+.wrapper .Space {
+  width: 310px;
+}
+.wrapper .Backspace {
+  width: 110px;
+}
+.wrapper .Enter {
+  width: 110px;
+}
+.wrapper .CapsLock {
+  width: 110px;
+}
+.wrapper .ShiftLeft,
+.wrapper .ShiftRight {
+  width: 110px;
+}
+.wrapper .ControlLeft,
+.wrapper .ControlRight,
+.wrapper .AltLeft,
+.wrapper .AltRight,
+.wrapper .MetaLeft {
+  width: 70px;
+}
+.wrapper .title {
+  margin: 10px auto;
+  width: 75%;
+  text-align: center;
+}

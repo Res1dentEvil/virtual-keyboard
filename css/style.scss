@@ -1,0 +1,122 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: #252526;
+    color           : #734636;
+}
+
+.wrapper {
+    display       : flex;
+    flex-direction: column;
+    max-width     : 1280px;
+    min-height    : 100px;
+    margin        : 0 auto;
+
+    .textarea {
+        margin          : 50px auto;
+        width           : 80%;
+        height          : 300px;
+        background-color: #3c3f414b;
+        border-radius   : 10px;
+        color           : white;
+        padding         : 30px;
+        font-size       : 25px;
+        border          : 1px solid #d9cf4a1f;
+
+
+    }
+
+    .keyBoard {
+        display         : flex;
+        flex-wrap       : wrap;
+        gap             : 10px;
+        background-color: #3c3f414b;
+        margin          : 0 auto;
+        padding         : 30px;
+        border-radius   : 10px;
+        border          : 1px solid #d9cf4a1f;
+        width           : 75%;
+
+        .row {
+            display: flex;
+            gap    : 10px;
+            margin : 0 auto;
+
+            .keyItem {
+                min-width          : 50px;
+                height             : 50px;
+                //padding          : 10px;
+                //border         : 1px solid #6A8C61;
+                background-color   : #F2EB85;
+                display            : flex;
+                justify-content    : center;
+                align-items        : center;
+                border-radius      : 5px;
+
+                &:hover {
+                    cursor          : pointer;
+                    background-color: #D9CF4A;
+                }
+
+                .keySpan {
+                    width          : 100%;
+                    height         : 100%;
+                    display        : flex;
+                    justify-content: center;
+                    align-items    : center;
+                    border-radius  : 5px;
+                    z-index: 2;
+                }
+            }
+
+            .active {
+                background-color: #6A8C61;
+                border-radius   : 10px;
+                transform       : scale(0.9);
+                color           : #F2EB85;
+
+            }
+        }
+    }
+
+    .Space {
+        width: 310px;
+    }
+
+    .Backspace {
+        width: 110px;
+    }
+
+    .Enter {
+        width: 110px;
+    }
+
+    .CapsLock {
+        width: 110px;
+    }
+
+    .ShiftLeft,
+    .ShiftRight {
+        width: 110px;
+    }
+
+    .ControlLeft,
+    .ControlRight,
+    .AltLeft,
+    .AltRight,
+    .MetaLeft {
+        width: 70px;
+    }
+
+    .title {
+        margin    : 10px auto;
+        width     : 75%;
+        text-align: center;
+    }
+}
