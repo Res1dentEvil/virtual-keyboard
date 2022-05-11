@@ -291,72 +291,81 @@ document.addEventListener('mouseup', (e) => {
   }
 });
 
+let arrOfAllKeyCode = [];
+for (let i = 0; i < dataKeys.length; i += 1) {
+  for (let j = 0; j < dataKeys[i].length; j += 1) {
+    arrOfAllKeyCode.push(dataKeys[i][j][0]);
+  }
+}
+
 document.addEventListener('keydown', (e) => {
-  // console.log(e.key, e.key.length)
-  e.preventDefault();
-  let activeKey = document.getElementsByClassName(e.code)[0];
-  addActive(activeKey);
+  if (arrOfAllKeyCode.includes(e.code)) {
+    // console.log(e.code)
+    e.preventDefault();
+    let activeKey = document.getElementsByClassName(e.code)[0];
+    addActive(activeKey);
 
-  if (capsLock && e.key.length === 1) {
-    textarea.value += keys[e.code][lang].caseUp;
-  } else if (!capsLock && e.key.length === 1) {
-    textarea.value += keys[e.code][lang].caseDown;
-  } else if (e.key === 'ArrowLeft' || e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === 'ArrowUp') {
-    textarea.value += keys[e.code][lang].caseDown;
-  }
+    if (capsLock && e.key.length === 1) {
+      textarea.value += keys[e.code][lang].caseUp;
+    } else if (!capsLock && e.key.length === 1) {
+      textarea.value += keys[e.code][lang].caseDown;
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      textarea.value += keys[e.code][lang].caseDown;
+    }
 
-  if (e.altKey && e.ctrlKey) {
-    changeLangAndCase();
-  }
-  if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') {
-    shiftChar();
-  }
+    if (e.altKey && e.ctrlKey) {
+      changeLangAndCase();
+    }
+    if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') {
+      shiftChar();
+    }
 
-  switch (e.code) {
-    case 'CapsLock':
-      capsLockChar();
-      break;
-    case 'Backspace':
-      backspaceChar();
-      break;
-    case 'Delete':
-      deleteChar();
-      break;
-    case 'MetaLeft':
-      break;
-    case 'Tab':
-      textarea.value += '    ';
-      break;
-    case 'Space':
-      textarea.value += '';
-      break;
-    case 'Enter':
-      textarea.value += '\n';
-      break;
-    case 'AltLeft':
-    case 'AltRight':
-      break;
-    case 'ControlLeft':
-    case 'ControlRight':
-      break;
-    default:
-      break;
+    switch (e.code) {
+      case 'CapsLock':
+        capsLockChar();
+        break;
+      case 'Backspace':
+        backspaceChar();
+        break;
+      case 'Delete':
+        deleteChar();
+        break;
+      case 'MetaLeft':
+        break;
+      case 'Tab':
+        textarea.value += '    ';
+        break;
+      case 'Space':
+        textarea.value += '';
+        break;
+      case 'Enter':
+        textarea.value += '\n';
+        break;
+      case 'AltLeft':
+      case 'AltRight':
+        break;
+      case 'ControlLeft':
+      case 'ControlRight':
+        break;
+      default:
+        break;
+    }
   }
 });
 
 document.addEventListener('keyup', (e) => {
-  let activeKey = document.getElementsByClassName(e.code)[0];
-  removeActive(activeKey);
-
-  if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') {
-    if (capsLock) {
-      capsLock = false;
-    } else {
-      capsLock = true;
+  if (arrOfAllKeyCode.includes(e.code)) {
+    let activeKey = document.getElementsByClassName(e.code)[0];
+    removeActive(activeKey);
+    if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') {
+      if (capsLock) {
+        capsLock = false;
+      } else {
+        capsLock = true;
+      }
+      let isCaps = true;
+      changeLangAndCase(isCaps);
     }
-    let isCaps = true;
-    changeLangAndCase(isCaps);
-    // console.log('up', e.code);
   }
 });
 
